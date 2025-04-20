@@ -1,0 +1,57 @@
+# Model arguments
+model_name_or_path: allenai/OLMo-7B-0724-hf
+model_revision: main
+torch_dtype: bfloat16
+attn_implementation: flash_attention_2
+use_liger_kernel: true
+
+# Data training arguments
+dataset_name: gartland/finewebedu-24K-tokenized
+dataset_split: 
+- train
+dataset_file_list: 
+  - "train-00-of-100.parquet"
+
+
+  
+preprocessing_num_workers: 32
+auto_insert_empty_system_msg: true
+dataloader_num_workers: 16
+
+# Trainer config
+bf16: true
+tf32: true
+torch_compile: false
+do_eval: false
+gradient_accumulation_steps: 1
+gradient_checkpointing: false
+# gradient_checkpointing_kwargs:
+#   use_reentrant: False
+hub_model_id: gartland/finewebedu-24K-embdnorm1
+learning_rate: 6.0e-4
+log_level: info
+logging_steps: 1
+logging_strategy: steps
+lr_scheduler_type: cosine
+max_steps: -1
+num_train_epochs: 1
+output_dir: output  ## always change name of output_dir when running each experiment
+overwrite_output_dir: true
+per_device_train_batch_size: 128
+remove_unused_columns: true
+report_to: none ## change to 'wandb' if you use wandb
+save_strategy: "no"
+save_steps: 1000
+
+seed: 42
+warmup_steps: 700
+weight_decay: 0.1
+
+# Hub
+push_to_hub: true
+hub_private_repo: true
+
+# WandB
+wandb_entity: gartland
+wandb_project: token-frequency 
+run_name: finewebedu-24K-unembdnorm1
