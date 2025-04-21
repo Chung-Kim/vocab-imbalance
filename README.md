@@ -9,6 +9,8 @@ pip install -r requirements.txt
 
 4 Experiments needed to run (24K, 49K, 98K, 196K) 
 
+config: num_layer:24, num_attention_head:24, hidden_size:1536, intermediate_size: 4096 ==> 8 times bigger non-embedding size than 85M (non-embed) experiments
+
 only change 14m.yaml file
 
 1. tokenizer_name_or_path (24K: gartland/finewebedu-24K-tokenizer, 49K: gartland/finewebedu-49K-tokenizer, 98K: gartland/finewebedu-98K-tokenizer 196K: gartland/finewebedu-196K-tokenizer)
