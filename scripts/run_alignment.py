@@ -95,7 +95,7 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
 
     # Load Tokenizer
     tokenizer = AutoTokenizer.from_pretrained(
-        'gartland/finewebedu_196K_tokenizer',
+        model_args.tokenizer_name_or_path,
         cache_dir=model_args.cache_dir
     )
     if tokenizer.pad_token_id is None:
