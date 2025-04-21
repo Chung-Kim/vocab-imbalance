@@ -126,6 +126,14 @@ class ModelArguments:
             )
         },
     )
+    tokenizer_name_or_path: Optional[str] = field(
+        default=None,
+        metadata={
+            "help": (
+                "Tokenizer path."
+            )
+        },
+    )
     model_revision: str = field(
         default="main",
         metadata={"help": "The specific model version to use (can be a branch name, tag name or commit id)."},

@@ -202,43 +202,40 @@ def initialize_model(attn_implementation, torch_dtype, tokenizer, config_path=".
     )
 
     return model
-
+    
 class OutputEmbeddingSelectiveUpdate(LlamaForCausalLM):
-    def __init__(self, config):
+    def __init__(self, config, vocab_size,
+                 lambda_norm_gap=1e-2,
+                 lambda_norm_var=1e-2,
+                 target_norm=1.0):
         super().__init__(config)
-        #self.model.embed_tokens.register_forward_pre_hook(self._project_lm_head)
-        #self.lm_head.register_forward_pre_hook(self._project_lm_head)
-    ''' 
-    def _project_lm_head(self, module, inputs):
-        # module.weight: [vocab_size, hidden_size]
-        with torch.no_grad():
-            print(module.weight.shape)
-            module.weight.data.copy_(F.normalize(module.weight.data, p=2, dim=0))
-   '''
-    def max_embedding_norms(self):
-        """
-        Computes the L2 norm of each token embedding.
-        """
-        return torch.max(torch.norm(self.get_output_embeddings().weight, dim=-1))
+        self.lambda_norm_gap = lambda_norm_gap   # std‑based
+        self.lambda_norm_var = lambda_norm_var   # keeps mean near target
+        self.register_buffer("target_norm", torch.tensor(target_norm,
+                                                         dtype=self.dtype))
 
-    def min_embedding_norms(self):
-        """
-        Computes the L2 norm of each token embedding.
-        """
-        return torch.min(torch.norm(self.get_output_embeddings().weight, dim=-1))  
-        
+    # --- utilities ---------------------------------------------------------
+    def _row_norms(self):
+        return torch.norm(self.get_output_embeddings().weight, dim=-1)
+
+    def _std_loss(self, norms):
+        return self.lambda_norm_gap * torch.std(norms)
+
+    def _mean_loss(self, norms):
+        # penalise squared deviation from target so grads = 2·Δ
+        delta = norms.mean() - self.target_norm
+        return self.lambda_norm_var * delta.pow(2)
+
+    # --- forward -----------------------------------------------------------
     def forward(self, input_ids, *args, **kwargs):
-        # identical to base class
-        #maxnorm = self.max_embedding_norms()
-        #minnorm = self.min_embedding_norms()
-        #print(maxnorm, minnorm)
-        with torch.no_grad():
-            self.lm_head.weight.data.copy_(F.normalize(self.lm_head.weight.data, p=2, dim=-1))
-        output = super().forward(input_ids=input_ids, *args, **kwargs)
-        #maxnorm = self.max_embedding_norms()
-        #minnorm = self.min_embedding_norms()
-        #print(maxnorm, minnorm)
-        return output
+        outputs = super().forward(input_ids=input_ids, *args, **kwargs)
+
+        norms = self._row_norms()
+        reg   = self._std_loss(norms) + self._mean_loss(norms)
+        if outputs.loss is not None:
+            outputs.loss += reg
+        return outputs
+
 
     @classmethod
     def from_config(cls, config, torch_dtype=None, attn_implementation=None):
