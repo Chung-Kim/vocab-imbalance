@@ -9,7 +9,7 @@ pip install -r requirements.txt
 
 4 Experiments needed to run (24K, 49K, 98K, 196K) 
 
-run 
+run code in token-frequency directory
 ```bash
 bash run/train.sh
 ```
