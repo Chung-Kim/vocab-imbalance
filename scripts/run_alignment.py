@@ -86,7 +86,7 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
     logger.info(f"Training/evaluation parameters {training_args}")
 
     # Load dataset
-    dataset = load_dataset(data_args.dataset_name, cache_dir=model_args.cache_dir, split=data_args.dataset_split, data_files=data_args.dataset_file_list, cache_dir=data_args.cache_dir)
+    dataset = load_dataset(data_args.dataset_name, cache_dir=model_args.cache_dir, split=data_args.dataset_split, data_files=data_args.dataset_file_list)
     #dataset = load_dataset(data_args.dataset_name, cache_dir=model_args.cache_dir, split=data_args.dataset_split)
     if hasattr(dataset, "shuffle"):
         pass
