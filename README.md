@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 run code in token-frequency directory
 ```bash
-bash run/train.sh
+bash run/train_24k.sh, bash run/train_24k.sh, bash run/train_24k.sh, bash run/train_24k.sh
 ```
 
 
