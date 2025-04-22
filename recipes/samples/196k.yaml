@@ -53,7 +53,8 @@ dataset_file_list:
   - "train-40-of-10.parquet"
   - "train-41-of-10.parquet"
   - "train-42-of-10.parquet"
-  
+
+cache_dir: 
 preprocessing_num_workers: 32
 auto_insert_empty_system_msg: true
 dataloader_num_workers: 16
