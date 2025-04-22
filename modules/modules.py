@@ -232,10 +232,6 @@ class DataArguments:
         default_factory=lambda: ["train", "test"],
         metadata={"help": ("List of train test splits to use in the dataset")},
     )
-    cache_dir: Optional[List[str]] = field(
-        default=None,
-        metadata={"help": ("local cache directory of dataset")},
-    )
     dataset_configs: Optional[List[str]] = field(
         default=None,
         metadata={"help": "List of dataset config names. If given must be the same length as 'dataset_mixer' keys."},
