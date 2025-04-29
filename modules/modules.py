@@ -208,6 +208,10 @@ class ModelArguments:
         default=True,
         metadata={"help": "Use liger kernel for alignment tuning."}
     )
+    resume_training: Optional[bool] = field(
+        default=False,
+        metadata={"help": "resume training"}
+    )
 
     def __post_init__(self):
         if self.load_in_8bit and self.load_in_4bit:
