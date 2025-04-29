@@ -44,7 +44,7 @@ from modules import (
     initialize_model_auxloss
     
 )
-
+import torch.nn.functional as F
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +56,16 @@ class UpdateStepCallback(TrainerCallback):
         model = kwargs['model']
         if hasattr(model, "set_step"):
             model.set_step(state.global_step)
+
+class RenormCallback(TrainerCallback):
+    def on_step_end(self, args, state, control, **kwargs):
+        # this fires after each optimizer.step()
+        model = kwargs["model"]
+        with torch.no_grad():
+            model.model.embed_tokens.weight.data.copy_(
+                F.normalize(model.lm_head.weight.data, p=2, dim=-1)
+            )
+        return control
 
 
 def main(model_args, data_args, training_args, training_type: str, loss_type_test: str, base_trainer: Trainer):
@@ -113,7 +123,7 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
         if training_type == "PRETRAIN":
             model = initialize_model(model_args.attn_implementation, torch_dtype, tokenizer)
         if training_type == "PROPOSED":
-            model = initialize_model_auxloss(model_args.attn_implementation, torch_dtype, tokenizer)
+            model = initialize_model(model_args.attn_implementation, torch_dtype, tokenizer)
         if training_type.lower() == 'dpo':
             ref_model = model_wrapper.from_pretrained(
                 model_args.model_name_or_path,
@@ -219,7 +229,7 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
             tokenizer=tokenizer,
             callbacks=callbacks,
         )
-    elif training_type.lower() in ['pretrain', 'proposed']:
+    elif training_type.lower() in ['pretrain']:
         data_collator = DataCollatorForLanguageModeling(
             tokenizer=tokenizer,
             mlm=False  # We're not using masked language modeling here
@@ -231,6 +241,19 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
             train_dataset=preprocessed_dataset,
             data_collator=data_collator,
             callbacks=[UpdateStepCallback()],
+        )
+    elif training_type.lower() in ['proposed']:
+        data_collator = DataCollatorForLanguageModeling(
+            tokenizer=tokenizer,
+            mlm=False  # We're not using masked language modeling here
+        )
+        trainer = base_trainer(
+            model,
+            args=training_args,
+            processing_class=tokenizer,
+            train_dataset=preprocessed_dataset,
+            data_collator=data_collator,
+            callbacks=[RenormCallback()],
         )
     else:
         trainer = base_trainer(
