@@ -63,7 +63,7 @@ class RenormCallback(TrainerCallback):
         model = kwargs["model"]
         with torch.no_grad():
             model.model.embed_tokens.weight.data.copy_(
-                F.normalize(model.lm_head.weight.data, p=2, dim=-1)
+                F.normalize(model.model.embed_tokens.weight.data, p=2, dim=-1)
             )
         return control
 
@@ -264,9 +264,10 @@ def main(model_args, data_args, training_args, training_type: str, loss_type_tes
             tokenizer=tokenizer,
             callbacks=callbacks,
         )
-
-
-    train_result = trainer.train()
+    if model_args.resume_training==True:
+        train_result = trainer.train(resume_from_checkpoint=True)
+    else:
+        train_result = trainer.train()
     metrics = train_result.metrics
     metrics["train_samples"] = len(preprocessed_dataset)
     trainer.log_metrics("train", metrics)
