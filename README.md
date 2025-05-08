@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 run code in token-frequency directory
 ```bash
-bash run/train_24k.sh, bash run/train_24k.sh, bash run/train_24k.sh, bash run/train_24k.sh
+bash run/train_24k.sh, bash run/train_49k.sh, bash run/train_98k.sh, bash run/train_196k.sh
 ```
 
 Also set local_dir and wandb in 24k.yaml ~ 196k.yaml
