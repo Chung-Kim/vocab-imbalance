@@ -65,6 +65,9 @@ class RenormCallback(TrainerCallback):
             model.model.embed_tokens.weight.data.copy_(
                 F.normalize(model.model.embed_tokens.weight.data, p=2, dim=-1)
             )
+            model.lm_head.weight.data.copy_(
+                F.normalize(model.lm_head.weight.data, p=2, dim=-1)
+            )
         return control
 
 
