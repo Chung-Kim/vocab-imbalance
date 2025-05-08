@@ -69,14 +69,14 @@ gradient_checkpointing: false
 # gradient_checkpointing_kwargs:
 #   use_reentrant: False
 #hub_model_id: gartland/finewebedu-196K-unembdnorm                                    ## will not be uploaded on huggingface
-learning_rate: 2.0e-4                                                                 ## use this as fixed lr
+learning_rate: 6.0e-4                                                                 ## use this as fixed lr
 log_level: info 
 logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: cosine
 max_steps: -1
 num_train_epochs: 1
-output_dir: output                                                                   ## always change name of output_dir when running each experiment
+output_dir: output_98K_embdnorm                                                                  ## always change name of output_dir when running each experiment
 overwrite_output_dir: true
 per_device_train_batch_size: 4                                                      ## 24K:8, 49K:4, 98K:4, 196K:2
 remove_unused_columns: true
