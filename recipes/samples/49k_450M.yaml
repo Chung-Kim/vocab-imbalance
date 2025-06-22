@@ -4,9 +4,11 @@ model_revision: main
 torch_dtype: bfloat16
 attn_implementation: flash_attention_2
 use_liger_kernel: true
-tokenizer_name_or_path: gartland/finewebedu_24K_tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
+tokenizer_name_or_path: gartland/finewebedu-49k-tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
+config_path: "./recipes/config/config_450M.json"
+
 # Data training arguments
-dataset_name: gartland/finewebedu_196K_tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
+dataset_name: gartland/finewebedu-49k-tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
 dataset_split: 
 - train
 dataset_file_list: 
@@ -53,7 +55,8 @@ dataset_file_list:
   - "train-40-of-10.parquet"
   - "train-41-of-10.parquet"
   - "train-42-of-10.parquet"
-  
+
+cache_dir:
 preprocessing_num_workers: 32
 auto_insert_empty_system_msg: true
 dataloader_num_workers: 16
@@ -63,25 +66,26 @@ bf16: true
 tf32: true
 torch_compile: false
 do_eval: false
-gradient_accumulation_steps: 1                                                       ## 24K:4, 49K:8, 98K:8, 196K:16  
+gradient_accumulation_steps: 1                                                      ## 24K:4, 49K:8, 98K:8, 196K:16  
 gradient_checkpointing: false
 # gradient_checkpointing_kwargs:
 #   use_reentrant: False
 #hub_model_id: gartland/finewebedu-196K-unembdnorm                                    ## will not be uploaded on huggingface
-learning_rate: 2.0e-4                                                                 ## use this as fixed lr
+learning_rate: 6.0e-4                                                                 ## use this as fixed lr
 log_level: info 
 logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: cosine
 max_steps: -1
 num_train_epochs: 1
-output_dir: output                                                                   ## always change name of output_dir when running each experiment
+output_dir: output_49k_embdnorm                                                                  ## always change name of output_dir when running each experiment
 overwrite_output_dir: true
 per_device_train_batch_size: 32                                                      ## 24K:8, 49K:4, 98K:4, 196K:2
 remove_unused_columns: true
 report_to: wandb ## change to 'wandb' if you use wandb
 save_strategy: "steps"
 save_steps: 200
+save_total_limit: 3
 
 seed: 42
 warmup_steps: 700

@@ -110,6 +110,15 @@ class ModelArguments:
     """
     Arguments pertaining to which model/config/tokenizer we are going to fine-tune.
     """
+
+    config_path:  Optional[str] = field(
+        default=None,
+        metadata={
+            "help": (
+                "configuration path"
+            )
+        },
+    )
     cache_dir: Optional[str] = field(
         default=None,
         metadata={"help": ("Cache directory for huggingface models. If set through environment variable, not needed.")},

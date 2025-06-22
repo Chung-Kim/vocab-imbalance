@@ -5,6 +5,8 @@ torch_dtype: bfloat16
 attn_implementation: flash_attention_2
 use_liger_kernel: true
 tokenizer_name_or_path: gartland/finewebedu-49k-tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
+config_path: "./recipes/config/config_1.3B.json"
+
 # Data training arguments
 dataset_name: gartland/finewebedu-49k-tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
 dataset_split: 
