@@ -7,21 +7,16 @@ Install
 pip install -r requirements.txt
 ```
 
-4 Experiments needed to run (24K, 49K, 98K, 196K) 
+16 Experiments needed to run (24K, 49K, 98K, 196K) * (7.5e-5, 1.5e-4, 1.2e-3, 2.4e-3) 
 
 run code in token-frequency directory
 
---450M models--
+--24K models--
 
 ```bash
-bash run/450M_24k.sh, bash run/450M_49k.sh, bash run/450M_98k.sh, bash run/450M_196k.sh
+bash run/24k_7.5e-5.sh, bash run/24k_1.5e-4.sh, bash run/24k_1.2e-3.sh, bash run/24k_2.4e-3.sh
 ```
 
---1.3B models--
-
-```bash
-bash run/1.3B_24k.sh, bash run/1.3B_49k.sh, bash run/1.3B_98k.sh, bash run/1.3B_196k.sh
-```
 
 Also set local_dir and wandb in 24k.yaml ~ 196k.yaml
 
