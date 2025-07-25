@@ -1,14 +1,13 @@
 # Model arguments
 model_name_or_path: allenai/OLMo-7B-0724-hf
 model_revision: main
-torch_dtype: bfloat16
-attn_implementation: flash_attention_2
+# torch_dtype: bfloat16
+# attn_implementation: flash_attention_2
 use_liger_kernel: true
-tokenizer_name_or_path: gartland/finewebedu-98K-tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
-config_path: "./recipes/config/config_1.3B.json"
-
+tokenizer_name_or_path: gartland/finewebedu-49K-tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
+config_path: "./recipes/config/config.json"
 # Data training arguments
-dataset_name: gartland/finewebedu-98K-tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
+dataset_name: gartland/finewebedu-49K-tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
 dataset_split: 
 - train
 dataset_file_list: 
@@ -56,31 +55,29 @@ dataset_file_list:
   - "train-41-of-10.parquet"
   - "train-42-of-10.parquet"
 
-cache_dir:
+cache_dir: /mnt/fr20tb/common/hf_cache/                                               #cache_dir
 preprocessing_num_workers: 32
 auto_insert_empty_system_msg: true
 dataloader_num_workers: 16
 
 # Trainer config
-bf16: true
-tf32: true
+# bf16: true
+# tf32: true
 torch_compile: false
 do_eval: false
-gradient_accumulation_steps: 8                                                       ## 24K:4, 49K:8, 98K:8, 196K:16  
+gradient_accumulation_steps: 2                                                      ## 24K:4, 49K:8, 98K:8, 196K:16  
 gradient_checkpointing: false
 # gradient_checkpointing_kwargs:
 #   use_reentrant: False
-hub_model_id: gartland/finewebedu-98K-1.3B                                   ## will not be uploaded on huggingface
-learning_rate: 2.0e-4                                                                 ## use this as fixed lr
+learning_rate: 1.5e-4                                                                 ## use this as fixed lr
 log_level: info 
 logging_steps: 1
 logging_strategy: steps
 lr_scheduler_type: cosine
 max_steps: -1
 num_train_epochs: 1
-output_dir: 98K-1.3B                                                                  ## always change name of output_dir when running each experiment
 overwrite_output_dir: true
-per_device_train_batch_size: 4                                                      ## 24K:8, 49K:4, 98K:4, 196K:2
+per_device_train_batch_size: 16                                                      ## 24K:8, 49K:4, 98K:4, 196K:2
 remove_unused_columns: true
 report_to: wandb ## change to 'wandb' if you use wandb
 save_strategy: "steps"
@@ -88,6 +85,10 @@ save_steps: 200
 save_total_limit: 3
 
 seed: 42
+output_dir: /mnt/LR62-20TB/jeonghoon/research/token-freq/output_49K_lr1.5e-4_seed42
+hub_model_id: gartland/finewebedu-49K-lr1.5e-4-seed42
+run_name: 49k-lr1.5e-4-seed42
+
 warmup_steps: 700
 weight_decay: 0.1
 
@@ -96,6 +97,6 @@ push_to_hub: true
 hub_private_repo: true
 
 # WandB
-wandb_entity: 
-wandb_project:
-run_name: ## finewebedu-vocabsize-base
+wandb_entity: SmallLM 
+wandb_project: token-freq-neurips2025
+
