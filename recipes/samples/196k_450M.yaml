@@ -5,7 +5,7 @@ model_revision: main
 # attn_implementation: flash_attention_2
 use_liger_kernel: true
 tokenizer_name_or_path: gartland/finewebedu-196K-tokenizer      ## this is the tokenizer. Should be changed (e.g. gartland/finewebedu_24K_tokenizer)
-config_path: "./recipes/config/config_tied.json"
+config_path: "./recipes/config/config_450M.json"
 # Data training arguments
 dataset_name: gartland/finewebedu-196K-tokenized               ## this is the tokenized dataset. should be change (e.g. gartland/finewebedu_24K_tokenized)
 dataset_split: 
@@ -69,7 +69,7 @@ gradient_accumulation_steps: 2                                                  
 gradient_checkpointing: false
 # gradient_checkpointing_kwargs:
 #   use_reentrant: False
-learning_rate: 6.0e-4                                                                 ## use this as fixed lr
+learning_rate: 3.0e-4                                                                 ## use this as fixed lr
 log_level: info 
 logging_steps: 1
 logging_strategy: steps
@@ -85,9 +85,9 @@ save_steps: 200
 save_total_limit: 3
 
 seed: 42
-output_dir: /mnt/LR62-20TB/jeonghoon/research/token-freq/output_196K_embdtied_seed42
-hub_model_id: gartland/finewebedu-196K-embdtied-seed42
-run_name: 196k-embdtied-seed42
+output_dir: /mnt/LR62-20TB/jeonghoon/research/token-freq/output_196K_450M_seed42
+hub_model_id: gartland/finewebedu-196K-450M-seed42
+run_name: 196k-450M-seed42
 
 warmup_steps: 700
 weight_decay: 0.1
