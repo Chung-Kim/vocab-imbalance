@@ -1,35 +1,40 @@
-# Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training 
+# [NeurIPS 2025] Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training 
 
 Woojin Chung and Jeonghoon Kim
 
+This is the official implementation for our NeurIPS 2025 paper: "Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training".
 
-Install 
+
+# Hugging Face Hub
+
+---
+
+All models and datasets reported in the paper are available in our Hugging Face space.
+
+**Install**
+
 
 ```bash
 pip install -r requirements.txt
 ```
 
-20 Experiments needed to run (24K, 49K, 98K, 196K) * (7.5e-5, 1.5e-4, 1.2e-3, 2.4e-3) + (24K_embdtied, 49K_embdtied, 98K_embdtied, 196K_embdtied)
+# Pre-training the Model
 
-run code in token-frequency directory
+---
 
---24K models--
+This codebase is built on LinkedIn's Liger Kernel. For API details, see the [Liger Kernel repository](https://github.com/linkedin/Liger-Kernel).
 
+**Run scripts**
+- Put your launch scripts in the run directory, then execute, e.g.:
 ```bash
-bash run/24k_7.5e-5.sh, bash run/24k_1.5e-4.sh, bash run/24k_1.2e-3.sh, bash run/24k_2.4e-3.sh
+bash run/24k_7.5e-5.sh
 ```
 
---tied models--
-```bash
-bash run/24k_embdtied.sh, bash run/49k_embdtied.sh, bash run/98k_embdtied.sh, bash run/196k_embdtied.sh
-```
+# Custom configurations
+For a custom model, create a config.json and place it under recipes/config/.
+Put your training YAML (data paths, hyperparameters, etc.) under recipes/samples/.
+Ensure your run script passes the path to this YAML at the end of the command.
 
---450M models--
-```bash
-bash run/24k_450M.sh, bash run/49k_450M.sh, bash run/98k_450M.sh, bash run/196k_450M.sh
-```
-
-Also set local_dir and wandb in 24k.yaml ~ 196k.yaml
 
 
 
