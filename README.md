@@ -17,7 +17,7 @@ All models and datasets reported in the paper are available in our Hugging Face 
 pip install -r requirements.txt
 ```
 
-# Pre-training the Model
+# Pre-training 
 
 
 
