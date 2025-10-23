@@ -7,7 +7,6 @@ This is the official implementation for our NeurIPS 2025 paper: "Exploiting Voca
 
 # Hugging Face Hub
 
----
 
 All models and datasets reported in the paper are available in our Hugging Face space.
 
@@ -20,7 +19,7 @@ pip install -r requirements.txt
 
 # Pre-training the Model
 
----
+
 
 This codebase is built on LinkedIn's Liger Kernel. For API details, see the [Liger Kernel repository](https://github.com/linkedin/Liger-Kernel).
 
