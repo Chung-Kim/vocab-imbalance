@@ -31,7 +31,9 @@ bash run/24k_7.5e-5.sh
 
 # Custom configurations
 For a custom model, create a config.json and place it under recipes/config/.
+
 Put your training YAML (data paths, hyperparameters, etc.) under recipes/samples/.
+
 Ensure your run script passes the path to this YAML at the end of the command.
 
 
