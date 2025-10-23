@@ -36,6 +36,8 @@ Put your training YAML (data paths, hyperparameters, etc.) under recipes/samples
 
 Ensure your run script passes the path to this YAML at the end of the command.
 
+# Citation
+
 ```bash
 @article{DBLP:journals/corr/abs-2508-15390,
   author       = {Woojin Chung and
