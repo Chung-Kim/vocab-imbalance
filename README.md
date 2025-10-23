@@ -1,4 +1,6 @@
-# token-frequency
+# Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training 
+
+Woojin Chung and Jeonghoon Kim
 
 
 Install 
