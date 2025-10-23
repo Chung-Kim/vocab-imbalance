@@ -36,6 +36,23 @@ Put your training YAML (data paths, hyperparameters, etc.) under recipes/samples
 
 Ensure your run script passes the path to this YAML at the end of the command.
 
+```bash
+@article{DBLP:journals/corr/abs-2508-15390,
+  author       = {Woojin Chung and
+                  Jeonghoon Kim},
+  title        = {Exploiting Vocabulary Frequency Imbalance in Language Model Pre-training},
+  journal      = {CoRR},
+  volume       = {abs/2508.15390},
+  year         = {2025},
+  url          = {https://doi.org/10.48550/arXiv.2508.15390},
+  doi          = {10.48550/ARXIV.2508.15390},
+  eprinttype    = {arXiv},
+  eprint       = {2508.15390},
+  timestamp    = {Thu, 18 Sep 2025 17:28:53 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-2508-15390.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+```
 
 
 
