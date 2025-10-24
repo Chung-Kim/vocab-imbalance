@@ -8,7 +8,7 @@ This is the official implementation for our NeurIPS 2025 paper: "Exploiting Voca
 # Hugging Face Hub
 
 
-All models and datasets reported in the paper are available in our Hugging Face space.
+All models and datasets reported in the paper are available in our Hugging Face collection [Vocab Frequency Imbalance](https://huggingface.co/collections/gartland/neurips-2025-vocabulary-frequency-imbalance).
 
 **Install**
 
